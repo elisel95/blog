@@ -1,13 +1,27 @@
 <?php
 session_start();
 
+if(!isset($_SESSION["pseudo"])){
+    header('Location : login.php');
+}else{
 ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
   <head>
 	<meta name="viewport" content="width-device-width,initial-scale=1">
     <meta charset="utf-8">
     <title>Connexion</title>
+    <!-- -->
+    <link
+	  href="../src/style.css"
+	  rel="stylesheet"
+	/>
+    <link
+	  href="../src/styleDashboard.css"
+	  rel="stylesheet"
+	/>
 	<!-- BOOTSTRAP -->
 	<!-- Font Awesome -->
 	<link
@@ -24,40 +38,24 @@ session_start();
 	  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
 	  rel="stylesheet"
 	/>
-    <!-- -->
-    <link
-	  href="src/style.css"
-	  rel="stylesheet"
-	/>
+
   </head>
-  <body class="gradient-custom" style="color:white;">
+  <body class="gradient-custom">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="../index.php">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                
-                <?php
-                if(!isset($_SESSION["pseudo"])){
-                ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="view/login.php">Login</a>
-                </li>  
-                <?php
-                }else{
-                ?>
+                          
                 <li class="nav-item">
                     <p class="nav-link navbar-nav"> Hello <?php echo $_SESSION['pseudo']; ?> </p>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="view/dashboard.php">Dashboard</a>
+                    <a class="nav-link" href="#">Dashboard</a>
                 </li>
-                <?php
-                };
-                ?>
                 
             </ul>
             <form class="form-inline my-2 my-lg-0 navbar-nav position-absolute end-0">
@@ -66,21 +64,46 @@ session_start();
             </form>
         </div>
     </nav>
+    
 
-    <div class="container">
-    <div class="row" style='margin-left:10%;margin-top:50px;'>
-    <?php
+    <div class="">
 
-            require('src/config.php');
-            $req = $conn->prepare('SELECT * FROM post ORDER BY id DESC');
-            $req->execute();
+        <div class="row navDashboard" style='color:white;'>
+            <div class="col-2">
+                <ul style="list-style-type:none;">
+                    <li><a style="color:white;" href="../controller/logout.php">Logout</a></li>
+                    <li><a style="color:white;" href="addPost.php">Add a post</a></li>    
+                </ul>
+            </div>
+            <div class="col-10">
+                <ul>
+            <?php
+
+            require('../src/config.php');
+            $author = $_SESSION['pseudo'];
+            $req = $conn->prepare('SELECT * FROM post WHERE author = :author  ORDER BY id DESC');
+            $req->execute(['author'=>$author]);
             $post = $req->fetch();
             foreach($req as $row){
-                echo "<div style='margin-bottom:30px;' class='col-4'><h2>".$row['title']."</h2><br> <p><em>".$row['date']." ".$row['author']."</em><br>".$row['content']."<br><img style='width:100px;' alt='".$row['title']."' src='".$row['picture']."'></p></div>";
+                echo "<li><b>".$row['title']."</b> <em>".$row['date']."</em></li>";
             };
-    ?>
-    </div>
+            ?>
+                </ul>
+            </div>
+        </div>
+
     </div>
 
-  </body>
+
+
+
+
+
+</body>
 </html>
+
+ 
+ 
+<?php 
+}
+?>

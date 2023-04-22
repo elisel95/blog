@@ -1,0 +1,13 @@
+.row .col-2 ul li{
+    margin-top:20px;
+}
+
+.navDashboard .col-2{
+    background-color : #33313c;
+    height: 700px;
+}
+
+.navDashboard .col-10{
+    padding-left: 50px;
+    margin-top:20px;
+}

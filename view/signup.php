@@ -53,7 +53,7 @@ session_start();
                     <p class="nav-link navbar-nav"> Hello <?php echo $_SESSION['pseudo']; ?> </p>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="view/dashboard.php">Dashboard</a>
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <?php
                 };
