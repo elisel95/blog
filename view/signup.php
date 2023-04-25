@@ -60,9 +60,9 @@ session_start();
                 ?>
                 
             </ul>
-            <form class="form-inline my-2 my-lg-0 navbar-nav position-absolute end-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <form class="form-inline my-2 my-lg-0 navbar-nav position-absolute end-0" method="get" action="../controller/search.php">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="searchSubmit">Search</button>
             </form>
         </div>
     </nav>
@@ -81,22 +81,22 @@ session_start();
                     <h2 class="fw-bold mb-2 text-uppercase">Sign up</h2>
 
                     <div class="form-outline form-white mb-4">
-                        <input type="email" name="mail" id="typeEmailX" class="form-control form-control-lg" />
+                        <input type="email" name="mail" id="typeEmailX" class="form-control form-control-lg" required/>
                         <label class="form-label" for="typeEmailX">Email</label>
                     </div>
 
                     <div class="form-outline form-white mb-4">
-                        <input type="text" name="pseudo"  class="form-control form-control-lg" />
+                        <input type="text" name="pseudo"  class="form-control form-control-lg" required/>
                         <label class="form-label" for="pseudo">Pseudo</label>
                     </div>
 
                     <div class="form-outline form-white mb-4">
-                        <input type="password" name="password" id="typePasswordX" class="form-control form-control-lg" />
+                        <input type="password" name="password" id="typePasswordX" class="form-control form-control-lg" required/>
                         <label class="form-label" for="typePasswordX">Password</label>
                     </div>
 
                     <div class="form-outline form-white mb-4">
-                        <input type="password" name="password2" class="form-control form-control-lg" />
+                        <input type="password" name="password2" class="form-control form-control-lg" required />
                         <label class="form-label" for="typePasswordX">Verify your Password</label>
                     </div>
 

@@ -58,9 +58,9 @@ if(!isset($_SESSION["pseudo"])){
                 </li>
                 
             </ul>
-            <form class="form-inline my-2 my-lg-0 navbar-nav position-absolute end-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <form class="form-inline my-2 my-lg-0 navbar-nav position-absolute end-0" method="get" action="../controller/search.php">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search" >
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="searchSubmit">Search</button>
             </form>
         </div>
     </nav>
@@ -75,22 +75,22 @@ if(!isset($_SESSION["pseudo"])){
                 <div class="card bg-dark text-white" style="border-radius: 1rem;">
                 <div class="card-body p-5 text-center">
 
-                <form method="post" action='../controller/addPost.php' class="mb-md-5 mt-md-4 pb-5" enctype="multipart/form-data">
+                <form method="post" name="addPostForm" action='../controller/addPost.php' class="mb-md-5 mt-md-4 pb-5" enctype="multipart/form-data">
 
                     <h2 class="fw-bold mb-2 text-uppercase">Add a post</h2>
 
                     <div class="form-outline form-white mb-4">
-                        <input type="text" name="title"  class="form-control form-control-lg" />
+                        <input type="text" name="title"  class="form-control form-control-lg" required/>
                         <label class="form-label" for="title">Title</label>
                     </div>
 
                     <div class="form-floating">
-                        <textarea class="form-control" name="content" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                        <textarea class="form-control" name="content" placeholder="Leave a comment here" id="floatingTextarea" required></textarea>
                         <label for="floatingTextarea">Comments</label>
                     </div>
 
                     <div class="mb-3 form-outline">
-                         <input class="form-control form-control-sm" name="picture" id="formFileSm" type="file">
+                         <input class="form-control form-control-sm" name="picture" id="formFileSm" type="file" required>
                     </div>
 
 
@@ -104,18 +104,12 @@ if(!isset($_SESSION["pseudo"])){
             </div>
         </div>
     </section>
-
     </div>
 
-
-
-
-
-
 </body>
+
 </html>
 
- 
  
 <?php 
 }

@@ -22,6 +22,8 @@ if(isset($_POST['login'])){
             $_SESSION['pseudo'] = $pseudo;
 
 
+        }else{
+            echo'Error : wrong password ! ';
         }
 
     }

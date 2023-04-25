@@ -1,4 +1,6 @@
 <?php
+require_once('../controller/search.php');
+
 session_start();
 
 ?>
@@ -26,13 +28,13 @@ session_start();
 	/>
     <!-- -->
     <link
-	  href="src/style.css"
+	  href="../src/style.css"
 	  rel="stylesheet"
 	/>
   </head>
   <body class="gradient-custom" style="color:white;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="../index.php">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -60,7 +62,7 @@ session_start();
                 ?>
                 
             </ul>
-            <form class="form-inline my-2 my-lg-0 navbar-nav position-absolute end-0" method="get" action="controller/search.php">
+            <form class="form-inline my-2 my-lg-0 navbar-nav position-absolute end-0" method="get" action="../controller/search.php">
                 <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="searchSubmit">Search</button>
             </form>
@@ -71,8 +73,7 @@ session_start();
     <div class="row" style='margin-left:10%;margin-top:50px;'>
     <?php
 
-            require('src/config.php');
-            $req = $conn->prepare('SELECT * FROM post ORDER BY id DESC');
+            $req = $conn->prepare('SELECT * FROM post WHERE title = "' . $_GET['search'] . '" ORDER BY id DESC');
             $req->execute();
             $post = $req->fetch();
             foreach($req as $row){
@@ -84,3 +85,4 @@ session_start();
 
   </body>
 </html>
+
