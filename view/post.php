@@ -1,27 +1,13 @@
 <?php
 session_start();
 
-if(!isset($_SESSION["pseudo"])){
-    header('Location : login.php');
-}else{
 ?>
-
-
 <!DOCTYPE html>
 <html lang="fr">
   <head>
 	<meta name="viewport" content="width-device-width,initial-scale=1">
     <meta charset="utf-8">
     <title>Connexion</title>
-    <!-- -->
-    <link
-	  href="../src/style.css"
-	  rel="stylesheet"
-	/>
-    <link
-	  href="../src/styleDashboard.css"
-	  rel="stylesheet"
-	/>
 	<!-- BOOTSTRAP -->
 	<!-- Font Awesome -->
 	<link
@@ -38,9 +24,13 @@ if(!isset($_SESSION["pseudo"])){
 	  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
 	  rel="stylesheet"
 	/>
-
+    <!-- -->
+    <link
+	  href="../src/style.css"
+	  rel="stylesheet"
+	/>
   </head>
-  <body class="gradient-custom">
+  <body class="gradient-custom" style="color:white;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="../index.php">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,61 +39,47 @@ if(!isset($_SESSION["pseudo"])){
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                          
+                
+                <?php
+                if(!isset($_SESSION["pseudo"])){
+                ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.php">Login</a>
+                </li>  
+                <?php
+                }else{
+                ?>
                 <li class="nav-item">
                     <p class="nav-link navbar-nav"> Hello <?php echo $_SESSION['pseudo']; ?> </p>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
+                <?php
+                };
+                ?>
                 
             </ul>
             <form class="form-inline my-2 my-lg-0 navbar-nav position-absolute end-0" method="get" action="../controller/search.php">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="searchSubmit">Search</button>
             </form>
         </div>
     </nav>
-    
 
-    <div class="">
-
-        <div class="row navDashboard" style='color:white;'>
-            <div class="col-2">
-                <ul style="list-style-type:none;">
-                    <li><a style="color:white;" href="../controller/logout.php">Logout</a></li>
-                    <li><a style="color:white;" href="addPost.php">Add a post</a></li>    
-                </ul>
-            </div>
-            <div class="col-10">
-                <ul>
-            <?php
-
+    <div class="container">
+    <div class="row" style='margin-left:10%;margin-top:50px;'>
+    <?php
             require('../src/config.php');
-            $author = $_SESSION['pseudo'];
-            $req = $conn->prepare('SELECT * FROM post WHERE author = :author  ORDER BY id DESC');
-            $req->execute(['author'=>$author]);
+            $req = $conn->prepare('SELECT * FROM post WHERE id = "' . $_GET['id'] . '"');
+            $req->execute();
             $post = $req->fetch();
-            foreach($req as $row){
-                echo "<li><b>".$row['title']."</b> <em>".$row['date']."</em> <br> <a target=_blank href='../view/post.php?post=".$row['title']."&id=" .$row['id']."' >Show more</a> - <a target=_blank href='../controller/delete.php?post=".$row['title']."&id=" .$row['id']."' >Delete</a> - <a target=_blank href='../view/modify.php?post=".$row['title']."&id=" .$row['id']."' >Modify</a></li>";
-            };
-            ?>
-                </ul>
-            </div>
-        </div>
+                echo "<h2>".$post['title']."</h2><br> <p><em>".$post['date']." - ".$post['author']."</em><br><img style='width:100px;' alt='".$post['title']."' src='".$post['picture']."'><br>".$post['content']."</p>";
 
+    ?>
+    </div>
     </div>
 
-
-
-
-
-
-</body>
+  </body>
 </html>
 
- 
- 
-<?php 
-}
-?>

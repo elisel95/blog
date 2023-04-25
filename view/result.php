@@ -46,7 +46,7 @@ session_start();
                 if(!isset($_SESSION["pseudo"])){
                 ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="view/login.php">Login</a>
+                    <a class="nav-link" href="login.php">Login</a>
                 </li>  
                 <?php
                 }else{
@@ -55,7 +55,7 @@ session_start();
                     <p class="nav-link navbar-nav"> Hello <?php echo $_SESSION['pseudo']; ?> </p>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="view/dashboard.php">Dashboard</a>
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <?php
                 };
@@ -77,7 +77,7 @@ session_start();
             $req->execute();
             $post = $req->fetch();
             foreach($req as $row){
-                echo "<div style='margin-bottom:30px;' class='col-4'><h2>".$row['title']."</h2><br> <p><em>".$row['date']." ".$row['author']."</em><br>".$row['content']."<br><img style='width:100px;' alt='".$row['title']."' src='".$row['picture']."'></p></div>";
+                echo "<div style='margin-bottom:30px;' class='col-4'><h2>".$row['title']."</h2><br> <p><em>".$row['date']." ".$row['author']."</em><br>".$row['content']."<br><img style='width:100px;' alt='".$row['title']."' src='".$row['picture']."'><a target=_blank href='../view/post.php?post=".$row['title']."&id=" .$row['id']."' >Show more</a></p></div>";
             };
     ?>
     </div>

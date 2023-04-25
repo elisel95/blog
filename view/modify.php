@@ -4,6 +4,12 @@ session_start();
 if(!isset($_SESSION["pseudo"])){
     header('Location : login.php');
 }else{
+
+    require('../src/config.php');
+            $req = $conn->prepare('SELECT * FROM post WHERE id = "' . $_GET['id'] . '"');
+            $req->execute();
+            $post = $req->fetch();
+
 ?>
 
 
@@ -54,12 +60,12 @@ if(!isset($_SESSION["pseudo"])){
                     <p class="nav-link navbar-nav"> Hello <?php echo $_SESSION['pseudo']; ?> </p>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 
             </ul>
             <form class="form-inline my-2 my-lg-0 navbar-nav position-absolute end-0" method="get" action="../controller/search.php">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search" >
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="searchSubmit">Search</button>
             </form>
         </div>
@@ -68,41 +74,46 @@ if(!isset($_SESSION["pseudo"])){
 
     <div class="">
 
-        <div class="row navDashboard" style='color:white;'>
-            <div class="col-2">
-                <ul style="list-style-type:none;">
-                    <li><a style="color:white;" href="../controller/logout.php">Logout</a></li>
-                    <li><a style="color:white;" href="addPost.php">Add a post</a></li>    
-                </ul>
-            </div>
-            <div class="col-10">
-                <ul>
-            <?php
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
 
-            require('../src/config.php');
-            $author = $_SESSION['pseudo'];
-            $req = $conn->prepare('SELECT * FROM post WHERE author = :author  ORDER BY id DESC');
-            $req->execute(['author'=>$author]);
-            $post = $req->fetch();
-            foreach($req as $row){
-                echo "<li><b>".$row['title']."</b> <em>".$row['date']."</em> <br> <a target=_blank href='../view/post.php?post=".$row['title']."&id=" .$row['id']."' >Show more</a> - <a target=_blank href='../controller/delete.php?post=".$row['title']."&id=" .$row['id']."' >Delete</a> - <a target=_blank href='../view/modify.php?post=".$row['title']."&id=" .$row['id']."' >Modify</a></li>";
-            };
-            ?>
-                </ul>
+                <form method="post" name="modifyPost" action='../controller/modifyPost.php?id=<?php echo $_GET['id']; ?>' class="mb-md-5 mt-md-4 pb-5" enctype="multipart/form-data">
+
+                    <h2 class="fw-bold mb-2 text-uppercase">Modify post</h2>
+
+                    <div class="form-outline form-white mb-4">
+                        <input type="text"  name="title"  class="form-control form-control-lg" value="<?php echo $post['title']; ?>"/>
+                       </div>
+
+                    <div class="form-floating">
+                        <input value="<?php echo $post['content']; ?>" class="form-control" name="content" placeholder="Leave a comment here" id="floatingTextarea" >
+                    </div>
+
+                    <div class="mb-3 form-outline">
+                         <input class="form-control form-control-sm" name="picture" id="formFileSm" type="file">
+                    </div>
+
+
+                    <button class="btn btn-outline-light btn-lg px-5" name="modifyPost" type="submit">Modify</button>
+
+                 </form>
+
+                </div>
+                </div>
+            </div>
             </div>
         </div>
-
+    </section>
     </div>
 
-
-
-
-
-
 </body>
+
 </html>
 
- 
  
 <?php 
 }
